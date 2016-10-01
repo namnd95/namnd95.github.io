@@ -2,15 +2,53 @@
 	<head>
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link href="dashboard.css" rel="stylesheet"></link>
+    <meta charset="utf-8">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>				
 		<script src="decode_timbus.js"></script>
     <script src="tram_timbus.js"></script>
+    <script src="ma_tram.js"></script>
 	</head>
 	<body>
-    <script>
-      get_tram_timbus(542);
+    <script>      
+      
+      var ds_tram;
+      $(document).ready(function() {
+        get_ds_tram(function(tram) {
+          ds_tram = tram;
+          option_value = ["436", "434", "584", "582", "1267"];
+          
+          var s = $("#select-bus");
+          for(var i = 0; i < option_value.length; ++i){
+            var id = option_value[i]
+            if (i == 0)
+              select_station(id)
+            var menu_option = "<option value=\"" + id + "\">" + ds_tram[id].Name + "</option>"
+            s.append(menu_option);
+          }
+        });      
+      });
+      
+      function select_station(id){
+        get_tram_timbus(id, function(data){
+          var table = $("#bus-result");
+          table.empty();          
+          for(var i = 0; i < data.length; ++i){
+            var obj = data[i];
+            var tuyen = obj.FleetCode;
+            var dist = parseFloat(obj.PartRemained) / 1000;            
+            var bks = obj.BienKiemSoat;
+            var content = "<tr><td>" + tuyen + "</td><td>" + dist + " km</td><td>" + bks + "</td></tr>";
+            table.append(content);
+          }
+        });
+      }
+      
+      function change_select_station(e){
+        select_station(e.value);
+      }
     </script>
+    <p id="text"></p>
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -37,7 +75,7 @@
     </nav>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+        <div class="col-sm-3 col-md-2">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
             <li><a href="#">Reports</a></li>
@@ -56,6 +94,27 @@
             <li><a href="">One more nav</a></li>
             <li><a href="">Another nav item</a></li>
           </ul>
+        </div>
+        
+        <div class="col-sm-9 col-md-10">          
+          <div>
+            <select id="select-bus" onchange="change_select_station(this)">
+            </select>
+          </div>
+          
+          <div>
+            <table class="table">
+              <thead>
+                <tr>  
+                  <th>Tuyến</th>
+                  <th>Khoảng cách</th>
+                  <th>Biển kiểm soát</th>
+                </tr>
+              </thead>
+              <tbody id="bus-result" >
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
