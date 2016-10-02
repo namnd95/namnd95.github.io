@@ -11,12 +11,12 @@
 	</head>
 	<body>
     <script>      
-      
+      //khoi_tao_tram_tren_duong_timbus();
       var ds_tram;
       $(document).ready(function() {
         get_ds_tram(function(tram) {
           ds_tram = tram;
-          option_value = ["436", "434", "584", "582", "1267"];
+          option_value = ["436", "434", "584", "582", "1267", "759", "760"];
           
           var s = $("#select-bus");
           for(var i = 0; i < option_value.length; ++i){

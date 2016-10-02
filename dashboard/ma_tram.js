@@ -1,14 +1,15 @@
-function add_tram(ds_tram, ds, callback){
+function add_tram(ds_ss, ds, callback){
   for(var i = 0; i < ds.length; ++i){
     var obj = ds[i];
     //console.log(obj);
-    ds_tram[obj.ObjectID] = obj;
+    ds_ss[obj.ObjectID] = obj;
   }
   callback();
 }
 
-function get_tram_tren_duong_timbus(ds_tram, id, callback){
-  var url = "http://localhost:8000/timbus/Engine/Business/Search/action.ashx";			 		
+function get_tram_tren_duong_timbus(ds_ss, id, callback){
+  //var url = "http://localhost:8000/timbus/Engine/Business/Search/action.ashx";			 		
+  var url = "http://net12k44.herokuapp.com/timbus/Engine/Business/Search/action.ashx";			 		
 	//*
   $.ajax({
 		url: url,
@@ -21,8 +22,8 @@ function get_tram_tren_duong_timbus(ds_tram, id, callback){
 		success: function(res) {
 			if (res.st == true) {
 				dt = decode_from_timbus(res.dt);
-        add_tram(ds_tram, dt.Go.Station, callback);
-        add_tram(ds_tram, dt.Re.Station, callback)
+        add_tram(ds_ss, dt.Go.Station, callback);
+        add_tram(ds_ss, dt.Re.Station, callback)
         return dt;
 			}
 		else 
@@ -36,14 +37,14 @@ function get_tram_tren_duong_timbus(ds_tram, id, callback){
 }
 
 function khoi_tao_tram_tren_duong_timbus(){
-  ds_tram = {};
-  tuyen = [22, 35, 50, 51];  
+  var ds_ss = {};
+  tuyen = [22, 35, 50, 51, 5];  
   var cnt = 0;
   for(var i = 0; i < tuyen.length; ++i)
-    get_tram_tren_duong_timbus(ds_tram, tuyen[i], function(e){
+    get_tram_tren_duong_timbus(ds_ss, tuyen[i], function(e){
       cnt++;
-      if (cnt == tuyen.length){
-        str = JSON.stringify(ds_tram);
+      if (cnt == tuyen.length*2){
+        str = JSON.stringify(ds_ss);
         $("#text").html(str);
       }
     });  

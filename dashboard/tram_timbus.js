@@ -1,7 +1,8 @@
 
 function get_tram_timbus(id, callback){	
-	var url = "http://localhost:8000/timbus/Engine/Business/Vehicle/action.ashx";			
-  console.log(id);
+	//var url = "http://localhost:8000/timbus/Engine/Business/Vehicle/action.ashx";			
+  var url = "http://net12k44.herokuapp.com/timbus/Engine/Business/Vehicle/action.ashx";			
+  //console.log(id);
 	//*
   $.ajax({
 		url: url,
