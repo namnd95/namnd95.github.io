@@ -38,7 +38,7 @@ function get_tram_tren_duong_timbus(ds_ss, id, callback){
 
 function khoi_tao_tram_tren_duong_timbus(){
   var ds_ss = {};
-  tuyen = [22, 35, 50, 51, 5];  
+  tuyen = [22, 32, 35, 50, 51, 5];  
   var cnt = 0;
   for(var i = 0; i < tuyen.length; ++i)
     get_tram_tren_duong_timbus(ds_ss, tuyen[i], function(e){
