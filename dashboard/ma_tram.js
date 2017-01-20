@@ -38,7 +38,7 @@ function get_tram_tren_duong_timbus(ds_ss, id, callback){
 
 function khoi_tao_tram_tren_duong_timbus(){
   var ds_ss = {};
-  tuyen = [22, 32, 35, 50, 51, 5];  
+  tuyen = [18, 22, 32, 35, 50, 51, 5, 845, 852];  
   var cnt = 0;
   for(var i = 0; i < tuyen.length; ++i)
     get_tram_tren_duong_timbus(ds_ss, tuyen[i], function(e){
@@ -50,9 +50,18 @@ function khoi_tao_tram_tren_duong_timbus(){
     });  
 }
 
-function get_ds_tram(callback){
-  var url = "data_tram.json";
-  $.getJSON("data_tram.json",{}, function( res ){      
+function filter_tram(ds_tram, filter){
+  var ds_ss = {};  
+  var cnt = 0;
+  for(var i = 0; i < filter.length; ++i)
+    ds_ss[filter[i]] = ds_tram[filter[i]];
+  str = JSON.stringify(ds_ss);
+  $("#text").html(str);
+}
+
+function get_ds_tram(filename, callback){
+  var url = filename;
+  $.getJSON(filename,{}, function( res ){      
 			callback(res)
   });		  
 }

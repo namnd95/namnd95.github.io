@@ -14,9 +14,11 @@
       //khoi_tao_tram_tren_duong_timbus();
       var ds_tram;
       $(document).ready(function() {
-        get_ds_tram(function(tram) {
-          ds_tram = tram;
-          option_value = ["436", "434", "584", "582", "1267", "513", "2070", "1409", "1412", "759", "760"];
+		var option_value = ["436", "434", "2648", "2679", "584", "582", "1267", "513", "2070", "1409", "1412", "759", "760"];
+		//get_ds_tram("data_tram.json", function(tram) {filter_tram(tram, option_value);});
+        get_ds_tram("data.json", function(tram) {
+          ds_tram = tram;          
+		  //filter_tram(ds_tram, option_value);
           
           var s = $("#select-bus");
           for(var i = 0; i < option_value.length; ++i){
