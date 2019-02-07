@@ -3,3 +3,7 @@
 	name = Nguyen Duc Nam
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
+[alias]
+	co = checkout
+	st = status
+	m = merge
