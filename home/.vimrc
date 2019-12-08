@@ -1,3 +1,4 @@
+set background=light
 set nocompatible
 filetype off
 
@@ -29,6 +30,10 @@ set t_Co=256
 "}}}
 
 filetype plugin indent on
+
+" Customised file type
+au BufRead,BufNewFile *.inp             setfiletype inp
+
 syntax on
 set nu
 " set mouse=a
@@ -75,6 +80,20 @@ function! CPPSET()
 	nnoremap <buffer> <A-F8> :w<cr> :!g++ -std=c++0x % -o ../file <cr> :!./../file <cr>
 endfunction
 
+"PAS
+function! PASSET()
+	:set expandtab
+	:set tabstop=2
+	let g:syntastic_pas_compiler = 'fpc'
+	let g:syntastic_pas_checkers = ['fpc']
+	inoremap <buffer> <C-F9> <ESC> <C-F9>
+	inoremap <buffer> <F9> <ESC> <F9>
+	inoremap <buffer> <F5> <ESC> <F5>
+	nnoremap <buffer> <F9> :w<cr> :!fpc -g % -o"file" <cr>
+	nnoremap <buffer> <C-F9> :!./file <file.inp <cr>
+	nnoremap <buffer> <F5> :w<cr> :!fpc -g % -o"file" <cr> :!./file <file.inp <cr>
+endfunction
+
 function! PYSET()
 	:set tabstop=4
 	:set expandtab
@@ -98,6 +117,7 @@ function! OCTAVESET()
 endfunction
 
 autocmd FileType cpp 	call CPPSET()
+autocmd FileType pascal 	call PASSET()
 autocmd FileType inp 	call INPUTSET()
 autocmd FileType python 	call PYSET()
 autocmd FileType java 	call JAVASET()

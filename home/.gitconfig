@@ -3,6 +3,8 @@
 	name = Nguyen Duc Nam
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
+[url "ssh://git@bitbucket.org/"]
+	insteadOf = https://bitbucket.org/
 [alias]
 	co = checkout
 	st = status
